@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Bet Above{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  #sortable1, #sortable2 {
+    border: 1px solid #eee;
+    width: 142px;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+  }
+  #sortable1 li, #sortable2 li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+  }
+  </style>
+
+{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+  <h1> {{ sport }} </h1>
+</div>
+
+<form action="{{ loc }}" method="POST">
+<input type='hidden' name='thedata' id='thedata'>
+{{ feature_html }}
+
+<ul id="sortable2" class="connectedSortable">
+Drop Wanted Features Here
+</ul>
+<input type="submit">
+</form>
+{{ result }}
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  $( "#sortable1, #sortable2" ).sortable({
+    connectWith: ".connectedSortable"
+    }).disableSelection();
+  $("form").submit(function() {
+    $('#thedata').val($( "#sortable2" ).sortable("serialize"));
+    var selected = [];
+    $("#sortable2 li").each(function(idx) {
+    selected.push($(this).text());
+    console.log('selected',selected);
+    });
+  })
+})
+
+</script>
+{{ moment.include_moment() }}
+{% block footer %} {{ super() }} {% endblock %}
+{% endblock %}

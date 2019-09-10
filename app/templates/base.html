@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Bet Above{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block navbar %}
+<style type="text/css">
+   .navbar-brand { color: #ffffff !important;
+                  font-size: 30px;
+                  float: } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+</style>
+<div class="navbar navbar-inverse" style="height:93px;background-color:#1E0032;" role="navigation">
+    <div class="container">
+        <div class="navbar-header" style="color:#ffffff;">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img height="65", src="{{ url_for('static', filename='betAboveLogoGood.jpg') }}"></img></a>
+        </div>
+        <div class="navbar-collapse collapse" style="color:#ffffff;">
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                <li><a href="{{ url_for('auth.register') }}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<style type="text/css">
+   body { background:#25003E !important;
+          color: #ffffff !important;    }
+</style>
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+{% block footer %}
+<style>
+  footer {
+  position:fixed !important;
+  bottom:0;
+  width:100%;
+  height:35px;   /* Height of the footer */
+  background:#1E0032;
+  text-align:center;
+  }
+</style>
+<footer><p style="padding:10px;">&copy; 2019 Bet Above. All rights reserved</p></footer>
+{% endblock footer %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}

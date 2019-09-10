@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Bet Above{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1> {{ sport }} </h1>
+</div>
+{{ wtf.quick_form(team_form) }}
+<div class="spacer"> or </div>
+<a href='{{ to_features }}'><button type="button" name="change">Change Preferences</button></a>
+{{ selected }}
+<div class="spacer"> </div>
+{{ result }}
+{% block footer %} {{ super() }} {% endblock %}
+{% endblock %}
